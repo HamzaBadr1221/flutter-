@@ -67,129 +67,163 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF7B6FD6),
         centerTitle: true,
         title: const Text('Volume Page'),
-
-        leading: const Icon(
-          Icons.volume_up,
-        ),
-
+        leading: const Icon(Icons.volume_up),
         actions: [
           IconButton(
             onPressed: isMuted ? unmuteVolume : muteVolume,
             icon: Icon(
-              isMuted
-                  ? Icons.volume_off
-                  : Icons.volume_mute,
+              isMuted ? Icons.volume_off : Icons.volume_mute,
             ),
           ),
         ],
       ),
 
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
-            Container(
-              width: 300,
-              height: 60,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  width: 2,
-                ),
-              ),
-
-              child: IconButton(
-                onPressed: increaseVolume,
-                icon: const Icon(
-                  Icons.add,
-                  size: 30,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            Container(
-              width: 300,
-              height: 100,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  width: 2,
-                ),
-              ),
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  Icon(
-                    isMuted
-                        ? Icons.volume_off
-                        : Icons.volume_up,
-                    size: 45,
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 300,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(width: 2),
                   ),
-
-                  const SizedBox(width: 20),
-
-                  Text(
-                    '$volume',
-                    style: const TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                  child: TextButton(
+                    onPressed: increaseVolume,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add,
+                          size: 30,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Volume Up',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
+
+                const SizedBox(height: 20),
+
+                Container(
+                  width: 300,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(width: 2),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            isMuted
+                                ? Icons.volume_off
+                                : Icons.volume_up,
+                            size: 40,
+                          ),
+                          const SizedBox(width: 15),
+                          Text(
+                            '$volume',
+                            style: const TextStyle(
+                              fontSize: 35,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      SizedBox(
+                        width: 230,
+                        child: LinearProgressIndicator(
+                          value: volume / 10,
+                          minHeight: 8,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                if (volume == 0)
+                  const Text(
+                    'Volume is muted',
+                    style: TextStyle(fontSize: 16),
+                  ),
+
+                if (volume == 10)
+                  const Text(
+                    'Maximum volume',
+                    style: TextStyle(fontSize: 16),
+                  ),
+
+                const SizedBox(height: 20),
+
+                Container(
+                  width: 300,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(width: 2),
+                  ),
+                  child: TextButton(
+                    onPressed: decreaseVolume,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.remove,
+                          size: 30,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Volume down',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const Positioned(
+            bottom: 20,
+            left: 0,
+            right: 0,
+            child: Text(
+              'Made by Hamza Badr',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 25,
+                color: Color(0xFF7B6FD6),
               ),
             ),
-
-            const SizedBox(height: 10),
-
-            // Hint
-            if (volume == 0)
-              const Text(
-                'Volume is muted',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-
-            if (volume == 10)
-              const Text(
-                'Maximum volume',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-
-            const SizedBox(height: 20),
-
-            Container(
-              width: 300,
-              height: 60,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  width: 2,
-                ),
-              ),
-
-              child: IconButton(
-                onPressed: decreaseVolume,
-                icon: const Icon(
-                  Icons.remove,
-                  size: 30,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
