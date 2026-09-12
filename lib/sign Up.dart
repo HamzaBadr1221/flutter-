@@ -176,10 +176,15 @@ class _LoginPageState extends State<SignUpPage>{
             width: double.infinity,
               height: 50,
               child:ElevatedButton(
-                onPressed:(){
-                  if (formKey.currentState!.validate()){
-                print('Login Successful');
-                }
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Sign Up Successful'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF0D9EFF),
